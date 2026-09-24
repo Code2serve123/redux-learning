@@ -1,12 +1,38 @@
-import { createStore } from "redux";
+import { combineReducers, createStore } from "redux";
+import { cartReducer } from "./reducer/cartReducer";
 import { productReducer } from "./reducer/productReducer";
 
-const store = createStore(
-  // Linking to redux
-  // the productReducer is linked to the store
+// For combining reducers, we can use the "combineReducers" function.
+const rootReducer = combineReducers({
+  /*  Its like a key-value pair :
+    {
+      productReducer : productReducer,
+      cartReducer : cartReducer
+    }
+  */
+  // its a short hand way of writing :
+  // { productReducer: productReducer, cartReducer : cartReducer }
   productReducer,
-  // As, a result of this "productReducer" will have access to "state" and "action" .
-);
+  cartReducer,
+});
+
+// > Syntax of createStore : first parameter is the "rootReducer", second parameter is the middlewares which we attach.
+const store = createStore(rootReducer);
+
+/* Earlier approach : 
+    > Linking to redux
+    > The productReducer is linked to the store
+    > productReducer,
+    > As, a result of this "productReducer" will have access to "state" and "action".
+  */
+
+/* Approach for createStore() :---
+    > We cannot follow the approch :
+    > Here, we have added another reducer.
+    > In createStore(), the second parameter is a middleware. Also, we cannot think that cartReducer can be added like this. The second parameter is a middleware.
+  */
+// We cannot give cartReducer as the second parameter, as it is not a middleware.
+// cartReducer,
 
 export default store;
 

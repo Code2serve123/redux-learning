@@ -1,36 +1,64 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import "./App.css";
 // > Earlier we were doing <import { addToProduct } from "./redux/reducer/productReducer";>,but now we have changed the name of file location.
 // > import { addToProduct } from "./redux/reducer/productReducer";
 // > Now, the import will happen from "./redux/action/productActions.js"
 import { addToProduct, increament } from "./redux/action/productAction";
 
+// We have made Products component in separate file under the src folder.
+import Products from "./Products";
+
+import Counter from "./Counter"
+
 function App() {
-  // const [count, setCount] = useState(0);
+  /*
+    >We will not use the approach of using useState hook to store the state.
+    >We are following an approach where a global file is used to store the state, ie. the approach of React-redux.
+    > const [count, setCount] = useState(0);
+    > React-redux mein state ko use karne ke liye : "useSelector" use karna hai.
+    > use of useDispatch hook to make a function named as 'dispatch'.
+  */
 
-  // React-redux mein state ko use karne ke liye : "useSelector" use karna hai.
-
-  // use of useDispatch hook to make a function named as 'dispatch' .
   const dispatch = useDispatch();
 
-  // useSelector() hook is called.
-  const state = useSelector(
-    // We need to work on "subscription basis", jaisa ki Manas bhai ne "zustand" mein bataya tha.
-    (state) => {
-      // Without any interference, we can return the full state.
-      // As a result of this, the value in const state will have the value of state as in <return state>.
+  /* Migrated the code part to Products.jsx file.
+    > Please note, if we do not want to show any details of state, then no need to use useSelector hook.
+    > useSelector() hook is called.
+    > We have taken subscription of the whole state, hence we are getting the below warning and even an error from browser :
+  */
+
+  /* Warning in the browser :
+    App.jsx:22 Selector unknown returned the root state when called. This can lead to unnecessary rerenders.
+    
+    Selectors that return the entire state are almost certainly a mistake, as they will cause a rerender whenever *anything* in state changes. 
+    
+    Error :
+    {stack: 'Error\n    at http://localhost:5173/node_modules/.v…ite/deps/react-dom_client.js?v=35cd753f:14142:12)'}
+  */
+  // Migrated the code part to Products.jsx file.
+  /* Migration :
+      const state = useSelector(
+      // We need to work on "subscription basis", jaisa ki Manas bhai ne "zustand" mein bataya tha.
+      (state) => {
+        
+          > Without any interference, we can return the full state.
+          > As a result of this, the value in const state will have the value of state as in <return state>.
+        
+      
       return state;
-    },
-  );
-  // We have called the "useSelector" hook, above, using () =>{ return state } as arguement.
-
-  // just to see what is the value of state.
-  console.log("state :", state);
-
-  // React-redux mein action ke liye : "useDispatch" use karna hai.
+      },
+      );
+      // We have called the "useSelector" hook, above, using () =>{ return state } as arguement.
+      
+      // just to see what is the value of state.
+      console.log("state :", state);
+      // Migrated the above part of code to Products.jsx
+      
+      // React-redux mein action ke liye : "useDispatch" use karna hai.
+    */
 
   const handleAddToProduct = () => {
-    /* Concept of creation of new inner function and calling it immediately using IIFE, because we want to call the function immediately, as it happens due to the click of button made inside the return statement of App.jsx file.
+    /* > Concept of creation of new inner function and calling it immediately using IIFE, because we want to call the function immediately, as it happens due to the click of button made inside the return statement of App.jsx file.
       > Create this function callback and immediately call it. Why/how immediately call it ? The use of IIFE makes the function call immediately. But, the creation of the function is happens due to the onClick handler with button having : onClick={handleAddToProduct}, as a result of that handleAddToProduct function will be called and that results in creation of IIFE and then calling the IIFE.
       
       > Link : https://chatgpt.com/g/g-p-6aa3f7126bd881919bcabc4a9dff1154-react-redux/c/6aaa6ae3-aecc-83e9-8560-162b4d84ae17
@@ -40,7 +68,7 @@ function App() {
       /* Use of dispathch function is must in React reducer for the addToProduct function to work effectively.
               > We need to use dispatch function, because we need to dispatch an "action" to the "reducer". But for the dispatch function to build, we need to make use of hook via : const dispatch = useDispatch();
               > useDispatch() is the hook which we will use.
-            */
+      */
 
       dispatch(
         addToProduct({
@@ -141,6 +169,12 @@ function App() {
       >
         Click to increment
       </button>
+
+      <br />
+
+      <Products></Products>
+
+      <Counter></Counter>
     </div>
   );
 }

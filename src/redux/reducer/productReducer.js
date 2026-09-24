@@ -1,6 +1,6 @@
 // Jai Ma Shri Radhe
 
-// this is the standard that is followed for :
+// This is the standard that is followed for :-
 const initialState = {
   products: [],
   count: 0,
@@ -126,10 +126,16 @@ export const productReducer = (state = initialState, action) => {
       /* Questions :
         > In case our case is "GET_PRODUCT", we will return the "action.payload". 
         > Q. Why don't we do : return state here ?
+        > Ans : We have got the answer while moving ahead with "ADD_TO_PRODUCT" case.
+        > We need to build the getProduct function in the "productAction.jsx" file.
+        > To deal with return action.payload, we need to build the getProduct function in the way to utilize the "action.payload" in the "productAction.jsx" file.
       */
     }
     case "INCREMENT": {
       // For every switch case, we need to make an action.
+
+      // After taking subscription model, we did the below thing :
+      console.log("increment ", state.count + 1);
 
       return {
         ...state,
